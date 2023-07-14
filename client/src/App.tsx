@@ -1,18 +1,24 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from "./layout";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
 
-
+    children: [
+      {path:'/',element:<Home/>},
+      { path: "/login", element: <Login /> }],
+  },
+]);
 
 function App() {
- 
-
   return (
     <>
-      <div className="bg-secondary">
-      <h1 className="text-3xl text-sky-400 font-bold ">
-      SastoSaman
-    </h1>
-      </div>
+      <RouterProvider router={router} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
