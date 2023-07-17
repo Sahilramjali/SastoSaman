@@ -16,9 +16,25 @@
   /* Hover Effects */
   --hover-primary: #f9c948;
   --hover-secondary: #f2f3f5;
+  --text-secondary:#F3F9FB;
 }
 
 body {
   background-color: var(--background-primary);
   color: var(--text-primary);
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  
+  
+ 
+}
+#root{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+ 
+  width: 100%;
+  
 }

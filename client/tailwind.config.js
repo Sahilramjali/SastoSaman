@@ -17,6 +17,7 @@ export default {
         },
         colors: {
             primary: 'var(--text-primary)',
+            blue:'var(--text-secondary)',
             dark: 'var(--text-dark)',
             secondary: 'var(--text-info)',
             hoverPrimary: 'var(--hover-primary)',
