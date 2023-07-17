@@ -28,8 +28,8 @@ const NavBar = () => {
     <nav className="flex transition-all gap-5">
        <div className="flex relative hover:scale-110">
       <ShoppingCart />
-      <span className="absolute top-[-13px] right-2 bg-hoverPrimary rounded-full w-5 h-5 text-center">1</span>
-      <span>cart</span>
+      <span className="absolute sm:top-[-13px] sm:right-2 top-[-9px] right-[-6px] bg-hoverPrimary rounded-full w-5 h-5 text-center ">1</span>
+      <span className="hidden sm:block">cart</span>
       </div>
       <div className="sm:hidden hover:scale-110" onClick={openMobileMenu}>
         {isOpen ? <X /> : <Menu />}
