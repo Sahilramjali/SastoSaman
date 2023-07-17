@@ -1,4 +1,4 @@
-import { User2, Menu, X } from "lucide-react";
+import { User2, Menu, X,ShoppingCart } from "lucide-react";
 
 import { Link } from "react-router-dom";
 
@@ -25,10 +25,16 @@ const NavBar = () => {
   });
   console.log(isOpen);
   return (
-    <nav className="flex transition-all">
+    <nav className="flex transition-all gap-5">
+       <div className="flex relative hover:scale-110">
+      <ShoppingCart />
+      <span className="absolute top-[-13px] right-2 bg-hoverPrimary rounded-full w-5 h-5 text-center">1</span>
+      <span>cart</span>
+      </div>
       <div className="sm:hidden hover:scale-110" onClick={openMobileMenu}>
         {isOpen ? <X /> : <Menu />}
       </div>
+     
       <ul
         className={
           isOpen
