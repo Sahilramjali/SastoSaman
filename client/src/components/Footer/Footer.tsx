@@ -37,7 +37,7 @@ const Footer = () => {
                 className="object-contain object-center"
               />
             </div>
-            <div className="w-32 md:w-40 h-16 mr-2 relative">
+            <div className="w-32 md:w-40 h-16  relative">
               <img
                 src={playStore}
                 alt="icon"

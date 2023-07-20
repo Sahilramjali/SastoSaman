@@ -12,7 +12,7 @@ const Listing:FC<ListingProps> = ({title,array}) => {
             {title}
         </h3>
         <hr/>
-        <ul className="list-disc">
+        <ul className="list-disc pl-5">
             {
                 array.map((category,index)=>(
                     <li key={index}>
