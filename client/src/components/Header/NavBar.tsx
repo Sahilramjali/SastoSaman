@@ -1,14 +1,26 @@
 import { User2, Menu, X,ShoppingCart } from "lucide-react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useState, useEffect } from "react";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { logout } from "../../redux/userSlice";
 
 const NavBar = () => {
+  const navigate=useNavigate();
+  const dispatch=useAppDispatch();
+  const {isLogin}=useAppSelector(state=>state.user);
+  console.log(isLogin);
   const [isOpen, setIsOpen] = useState(false);
   const openMobileMenu = () => {
     setIsOpen(!isOpen);
   };
+  const logOuthandler=()=>{
+    setIsOpen(false);
+    dispatch(logout());
+    navigate('/login');
+  }
   useEffect(() => {
     const showMenu = () => {
       if (window.innerWidth > 767) {
@@ -26,7 +38,7 @@ const NavBar = () => {
   console.log(isOpen);
   return (
     <nav className="flex transition-all gap-5">
-       <div className="flex relative hover:scale-110">
+       <div className="flex relative hover:scale-110 hover:cursor-pointer">
       <ShoppingCart />
       <span className="absolute sm:top-[-13px] sm:right-2 top-[-9px] right-[-6px] bg-hoverPrimary rounded-full w-5 h-5 text-center ">1</span>
       <span className="hidden sm:block">cart</span>
@@ -42,9 +54,13 @@ const NavBar = () => {
             : "hidden sm:flex gap-5"
         }
       >
-        <Link className="hover:scale-110 " onClick={()=>setIsOpen(false)} to="/login">
+        {isLogin?(
+        
+        <li className="hover:scale-110 hover:cursor-pointer " onClick={logOuthandler}>Logout</li>
+     
+      ):(<Link className="hover:scale-110 " onClick={()=>setIsOpen(false)} to="/login">
           <li>Login</li>
-        </Link>
+        </Link>)}
         <Link className="hover:scale-110" onClick={()=>setIsOpen(false)} to="/profile">
           <User2 />
         </Link>

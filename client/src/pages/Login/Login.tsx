@@ -4,6 +4,9 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { login } from "../../redux/userSlice";
 const Login = () => {
   const {
     register,
@@ -11,6 +14,9 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 const navigate=useNavigate();
+const dispatch=useAppDispatch();
+const Data=useAppSelector(state=>state.user);
+
   const onSubmitLogin = async(formdata) => {
   
     
@@ -19,7 +25,10 @@ const result= await axios.post('http://localhost:5000/api/auth/login',formdata)
     if(result?.data?.status==='error'){
      return toast.error(result?.data?.message);
     }
+    dispatch(login(result.data.result))
     navigate('/');
+    console.log(result.data.result);
+    console.log( await Data);
     return  toast.success(result.data.message);
     
     }catch(err){
