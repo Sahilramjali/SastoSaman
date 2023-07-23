@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import Input from "../components/Input";
+import Input from "../../components/Input";
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
@@ -27,8 +27,8 @@ const result= await axios.post('http://localhost:5000/api/auth/login',formdata)
     }
   };
   return (
-    <section className="flex justify-center items-center relative">
-       <div className="absolute top-36 pt-2 flex flex-col justify-center items-center pb-10 bg-cardSecondary rounded-md w-96 shadow-lg p-10 mb-5">
+    <section className="flex justify-center items-center relative ">
+       <div className="absolute top-36 pt-2 flex flex-col justify-center items-center pb-10 bg-cardSecondary rounded-md w-90 sm:w-96 shadow-lg p-10 mb-5">
       <h2 className="text-[2rem]">Login</h2>
       <form onSubmit={handleSubmit(onSubmitLogin)} className="flex flex-col justify-center items-center gap-4">
         <div>

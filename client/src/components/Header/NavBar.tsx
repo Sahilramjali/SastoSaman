@@ -42,22 +42,16 @@ const NavBar = () => {
             : "hidden sm:flex gap-5"
         }
       >
-        <Link className="hover:scale-110 " to="/login">
+        <Link className="hover:scale-110 " onClick={()=>setIsOpen(false)} to="/login">
           <li>Login</li>
         </Link>
-        <Link className="hover:scale-110" to="/profile">
+        <Link className="hover:scale-110" onClick={()=>setIsOpen(false)} to="/profile">
           <User2 />
         </Link>
       </ul>
     </nav>
   );
 };
-// position: absolute;
-// top: 3.5rem;
-// right: 1.5rem;
-// z-index: 10;
-// border: 1px solid black;
-// padding: 1rem;
-// // gap: 1.5rem;
+
 
 export default NavBar;
