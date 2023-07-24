@@ -27,6 +27,9 @@ export const userSlice=createSlice({
             state.id='';
             state.username='';
             state.isLogin=false;
+        },
+        getLocalStorage:(state,action)=>{
+            state.
         }
     }
 

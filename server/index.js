@@ -6,7 +6,9 @@ import cors from 'cors';
 import bodyParser from 'body-parser'
 import auth from './routes/authRoute.js';
 import product from './routes/productRoute.js';
+import carts from './routes/cartRoute.js';
 import {v2 as cloudinary} from 'cloudinary';
+
 const app = express();
 const PORT = 5000;
 dotenv.config();
@@ -30,6 +32,7 @@ cloudinary.config({
 //api router
 app.use("/api/auth",auth );
 app.use('/api/product',product);
+app.use('/api/cart',carts);
 
 mongoose
   .connect(process.env.MONGO_URL)
