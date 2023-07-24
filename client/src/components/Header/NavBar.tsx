@@ -6,10 +6,12 @@ import { useState, useEffect } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { logout } from "../../redux/userSlice";
+import { useCookies } from "react-cookie";
 
 const NavBar = () => {
   const navigate=useNavigate();
   const dispatch=useAppDispatch();
+  const[,,removeCookie]=useCookies(['user']);
   const {isLogin}=useAppSelector(state=>state.user);
   console.log(isLogin);
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +21,7 @@ const NavBar = () => {
   const logOuthandler=()=>{
     setIsOpen(false);
     dispatch(logout());
+    removeCookie('user');
     navigate('/login');
   }
   useEffect(() => {

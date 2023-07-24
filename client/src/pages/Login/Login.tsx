@@ -7,6 +7,20 @@ import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { login } from "../../redux/userSlice";
+import { useCookies } from 'react-cookie';
+
+// interface result{
+//   _id:string;
+//   username:string;
+//   email:string;
+// }
+// interface response{
+//   status:string;
+//   message:string;
+//   result?:result;
+//   token?:string;
+// }
+
 const Login = () => {
   const {
     register,
@@ -16,7 +30,7 @@ const Login = () => {
 const navigate=useNavigate();
 const dispatch=useAppDispatch();
 const Data=useAppSelector(state=>state.user);
-
+const[cookies,setCookie]=useCookies(['user']);
   const onSubmitLogin = async(formdata) => {
   
     
@@ -26,6 +40,16 @@ const result= await axios.post('http://localhost:5000/api/auth/login',formdata)
      return toast.error(result?.data?.message);
     }
     dispatch(login(result.data.result))
+    setCookie('user',{
+      token:result.data.token,
+      email:result.data.result.email,
+      username:result.data.result.username,
+      id:result.data.result._id,
+
+    },
+    { maxAge: 24*60*60 }
+    );
+    console.log("cookies : ",cookies);
     navigate('/');
     console.log(result.data.result);
     console.log( await Data);

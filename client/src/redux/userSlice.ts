@@ -28,11 +28,15 @@ export const userSlice=createSlice({
             state.username='';
             state.isLogin=false;
         },
-        getLocalStorage:(state,action)=>{
-            state.
+        getCookieStorage:(state,action)=>{
+
+            state.id=action.payload.id;
+            state.username=action.payload.username;
+            state.isLogin=action.payload.token?true:false;
+
         }
     }
 
 });
-export const {login,logout}=userSlice.actions;
+export const {login,logout,getCookieStorage}=userSlice.actions;
 export default userSlice.reducer;
