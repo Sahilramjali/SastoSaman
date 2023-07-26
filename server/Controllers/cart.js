@@ -20,7 +20,7 @@ export const addCart=async(req,res)=>{
             }
             const updateCart=await cart.findOneAndUpdate(
                 {productId,userId},
-                {$inc:{quantity}},
+                {quantity},
                 {new:true}
             )
             if(updateCart){
@@ -38,6 +38,27 @@ export const addCart=async(req,res)=>{
     }
 }
 
+export const removeItemFromCart=async(req,res)=>{
+    try{
+        const token=jwt.verify(
+            req.headers.authorization.split(" ")[1],
+            process.env.JWT_SECRET_KEY
+        );
+        const userId=token._id;
+        const productId=req.params.productId;
+        if(userId){
+            await cart.findOneAndDelete({userId,productId});
+            
+            
+            return res.json({status:"success"})
+        }else{
+            return res.json({status:'error',message:"user not found"})
+        }
+    }catch(err){
+        console.log(err);
+        res.status(500).json({status:"error",message:"Internal Server error"})
+    }
+}
 export const viewCart=async(req,res)=>{
     try{
         const token=jwt.verify(

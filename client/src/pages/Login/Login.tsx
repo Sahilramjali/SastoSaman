@@ -8,7 +8,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { login } from "../../redux/userSlice";
 import { useCookies } from 'react-cookie';
-
+import { Navigate } from "react-router-dom";
 // interface result{
 //   _id:string;
 //   username:string;
@@ -29,7 +29,7 @@ const Login = () => {
   } = useForm();
 const navigate=useNavigate();
 const dispatch=useAppDispatch();
-const Data=useAppSelector(state=>state.user);
+const {isLogin}=useAppSelector(state=>state.user);
 const[cookies,setCookie]=useCookies(['user']);
   const onSubmitLogin = async(formdata) => {
   
@@ -52,13 +52,17 @@ const result= await axios.post('http://localhost:5000/api/auth/login',formdata)
     console.log("cookies : ",cookies);
     navigate('/');
     console.log(result.data.result);
-    console.log( await Data);
+  
     return  toast.success(result.data.message);
     
     }catch(err){
       console.log(err);
     }
   };
+  if(isLogin){
+    return <Navigate to='/'/>
+  }
+
   return (
     <section className="flex justify-center items-center relative ">
        <div className="absolute top-36 pt-2 flex flex-col justify-center items-center pb-10 bg-cardSecondary rounded-md w-90 sm:w-96 shadow-lg p-10 mb-5">

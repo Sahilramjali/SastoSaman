@@ -4,9 +4,15 @@ import toast from "react-hot-toast";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const Test = () => {
-    const navigate=useNavigate();
+  const [name, setName] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
+  const [cookies, ,] = useCookies(["user"]);
+  const navigate = useNavigate();
   const [image, setFile] = useState("");
   const handleFileChange = (e: any) => {
     const tempFile = e.target.files[0];
@@ -26,19 +32,16 @@ const Test = () => {
       .post(
         "http://localhost:5000/api/product/addProduct",
         {
-          name: "Electronics appliance",
-          category: "Electronics appliance",
-          description: `With Mic:Yes Bluetooth version: 5.3 Wireless Range: 10m
-                Battery Time: upto Hours
-                13mm Drivers
-                IPX5 Water & Sweat Resistance`,
+          name,
+          category,
+          description,
           image,
-          price: 1000,
+          price,
         },
         {
           withCredentials: true,
           headers: {
-            Authorization: `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGJjYTMxYWUzYzYwNDNlODExMzYyODMiLCJ1c2VybmFtZSI6ImpvaG4iLCJlbWFpbCI6ImpvaG5AZ21haWwuY29tIiwiY3JlYXRlZEF0IjoiMjAyMy0wNy0yM1QwMzo0ODo0Mi4wMzBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNy0yM1QwMzo0ODo0Mi4wMzBaIiwiX192IjowLCJpYXQiOjE2OTAwODQxMzZ9.sZ2nlMoTVLgfzxLkhzQTODji_23Y80XIpS3tV47pif0`,
+            Authorization: `bearer ${cookies.user.token}`,
           },
         }
       )
@@ -48,7 +51,6 @@ const Test = () => {
         } else {
           toast.success("blog posted");
           navigate("/");
-         
         }
       })
       .catch(() => {
@@ -56,9 +58,41 @@ const Test = () => {
       });
   };
   return (
-    <div>
-      <form onSubmit={handleSubmitForm}>
+    <div className="flex flex-col">
+      <form onSubmit={handleSubmitForm} className="flex flex-col gap-3">
         <input type="file" name="file" onChange={handleFileChange} />
+        <input
+          type="text"
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="name"
+          className="border"
+        />
+        <input
+          type="text"
+          name="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          placeholder="category name"
+          className="border"
+        />
+        <input
+          type="text"
+          name="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="description"
+          className="border"
+        />
+        <input
+          type="text"
+          name="price"
+          value={price}
+          onChange={(e) => setPrice(parseInt(e.target.value))}
+          placeholder="price"
+          className="border"
+        />
         <button type="submit">submit</button>
       </form>
     </div>

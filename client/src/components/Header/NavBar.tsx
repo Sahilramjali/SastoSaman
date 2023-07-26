@@ -13,11 +13,13 @@ const NavBar = () => {
   const dispatch=useAppDispatch();
   const[,,removeCookie]=useCookies(['user']);
   const {isLogin}=useAppSelector(state=>state.user);
-  console.log(isLogin);
+  
   const [isOpen, setIsOpen] = useState(false);
   const openMobileMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  
   const logOuthandler=()=>{
     setIsOpen(false);
     dispatch(logout());
@@ -38,14 +40,16 @@ const NavBar = () => {
       clearInterval(interval);
     };
   });
-  console.log(isOpen);
+ 
   return (
     <nav className="flex transition-all gap-5">
+       <Link to='/cart' onClick={()=>setIsOpen(false)}>
        <div className="flex relative hover:scale-110 hover:cursor-pointer">
       <ShoppingCart />
       <span className="absolute sm:top-[-13px] sm:right-2 top-[-9px] right-[-6px] bg-hoverPrimary rounded-full w-5 h-5 text-center ">1</span>
       <span className="hidden sm:block">cart</span>
       </div>
+       </Link>
       <div className="sm:hidden hover:scale-110" onClick={openMobileMenu}>
         {isOpen ? <X /> : <Menu />}
       </div>

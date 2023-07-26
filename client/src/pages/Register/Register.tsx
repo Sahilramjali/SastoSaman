@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import Input from "../../components/Input";
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../hooks/useAppSelector";
+
 const Register = () => {
   
     const {
@@ -12,6 +14,7 @@ const Register = () => {
       formState: { errors },
     } = useForm();
   const navigate=useNavigate();
+  const {isLogin}=useAppSelector(state=>state.user);
     const onSubmitLogin = async(formdata) => {
     
       
@@ -27,6 +30,10 @@ const Register = () => {
         toast.error("Internal server error");
       }
     };
+    if(isLogin){
+      return <Navigate to='/'/>
+    }
+
     return (
       <section className="flex  justify-center items-center relative">
          <div className="absolute top-36 pt-2 flex flex-col justify-center items-center pb-10 bg-cardSecondary rounded-md w-90 sm:w-96 shadow-lg p-10 mb-5">
