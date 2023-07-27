@@ -6,6 +6,9 @@ import { useEffect, useCallback, useState } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { addToCart } from "../../redux/cartSlice";
+
 
 
 export interface cardItemsProps {
@@ -29,10 +32,13 @@ export interface cardItemsProps {
 }
 
 const Cart = () => {
+  const {cartItems,totalPrice}=useAppSelector(state=>state.cart);
+  const dispatch=useAppDispatch();
   const [cookies, ,] = useCookies(["user"]);
+  
   const { isLogin } = useAppSelector((state) => state.user);
-  const [cartItems, setCartItems] = useState<cardItemsProps[]>([]);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [cartItem, setCartItems] = useState<cardItemsProps[]>(cartItems);
+  // const [totalPrices, setTotalPrice] = useState<number>(0);
   const [reload, setReload] = useState(false);
 
   const fetchCartItems = useCallback(async () => {
@@ -44,21 +50,17 @@ const Cart = () => {
       })
       .then((res) => {
         setCartItems(res.data.cartItems);
-        console.log(cartItems);
-       
+        dispatch(addToCart(res.data.cartItems));
+        console.log(cartItem);
+       console.log(cartItems);
         
-        setTotalPrice(()=>{
-          const total = cartItems.reduce((sum, product) => {
-            return sum + product.productData[0].price * product.quantity;
-          }, 0);
-          return total;
-        });
+        // setTotalPrice();
       })
       .catch((err) => {
         console.log(err);
         toast.error("Internal server Error");
       });
-  }, [cartItems, cookies?.user?.token]);
+  }, [cartItem, cookies?.user?.token]);
 
   useEffect(() => {
     if (cookies?.user?.token) {
@@ -84,8 +86,8 @@ const Cart = () => {
             },
           }
         )
-        .then(() => {
-          
+        .then((res) => {
+          console.log(res);
           setReload(!reload);
         })
         .catch((err) => {
@@ -95,10 +97,11 @@ const Cart = () => {
     } else{
     await  itemRemove(item.productId);
     }
+    console.log("hit reduce");
   };
 
   const addQuantity = (item: cardItemsProps) => {
-    if (item.quantity > 1) {
+    
       const inew:cardItemsProps = { ...item };
       inew.quantity = inew.quantity + 1;
       
@@ -115,15 +118,15 @@ const Cart = () => {
             },
           }
         )
-        .then(() => {
-          
+        .then((res) => {
+          console.log(res)
           setReload(!reload);
         })
         .catch((err) => {
           console.log(err);
           toast.error("something went wrong")
         });
-    } 
+    
   };
 
   const itemRemove=async(productId:string)=>{
@@ -152,18 +155,14 @@ const Cart = () => {
         <p className="text-center">No product added in cart</p>
       ) : (
         <>
-          {cartItems.map((product) => (
+          {cartItems.map((product,index) => (
             <CartCard
-              key={product._id}
+              key={product._id+index}
               product={product}
               removeQuantity={removeQuantity}
               addQuantity={addQuantity}
               itemRemove={itemRemove}
-              // productId={product.productId}
-              // productTitle={product.productData[0].name}
-              // productPrice={product.productData[0].price}
-              // productImage={product.productData[0].imageUrl}
-              // productQuantity={product.quantity}
+           
             />
           ))}
           <hr className="mt-6 border-[0.2rem]" />

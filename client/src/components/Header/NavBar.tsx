@@ -13,7 +13,7 @@ const NavBar = () => {
   const dispatch=useAppDispatch();
   const[,,removeCookie]=useCookies(['user']);
   const {isLogin}=useAppSelector(state=>state.user);
-  
+  const {itemCount}=useAppSelector(state=>state.cart);
   const [isOpen, setIsOpen] = useState(false);
   const openMobileMenu = () => {
     setIsOpen(!isOpen);
@@ -46,7 +46,7 @@ const NavBar = () => {
        <Link to='/cart' onClick={()=>setIsOpen(false)}>
        <div className="flex relative hover:scale-110 hover:cursor-pointer">
       <ShoppingCart />
-      <span className="absolute sm:top-[-13px] sm:right-2 top-[-9px] right-[-6px] bg-hoverPrimary rounded-full w-5 h-5 text-center ">1</span>
+      <span className={itemCount!=0?"absolute sm:top-[-13px] sm:right-2 top-[-9px] right-[-6px] bg-hoverPrimary rounded-full w-5 h-5 text-center ":"hidden"}>{itemCount}</span>
       <span className="hidden sm:block">cart</span>
       </div>
        </Link>
