@@ -77,8 +77,8 @@ export const viewCart=async(req,res)=>{
                     },
                 },
             ]);
-            
-            return res.json({status:"success",cartItems:cartItems})
+            const count=await cart.countDocuments({userId});
+            return res.json({status:"success",cartItems:cartItems,itemCount:count})
         }else{
             return res.json({status:'error',message:"user not found"})
         }
