@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./layout";
 import Login from "./pages/Login/Login";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Register from "./pages/Register/Register";
 import Test from "./pages/test";
 import Cart from "./pages/cart/Cart";
@@ -9,6 +9,8 @@ import Cart from "./pages/cart/Cart";
 import { useCookies } from "react-cookie";
 import { useAppDispatch } from "./hooks/useAppDispatch";
 import { getCookieStorage } from "./redux/userSlice";
+import CategoryProduct from "./pages/Category/CategoryProduct";
+import ProductDetail from "./pages/Product/ProductDetail";
 
 function App() {
 
@@ -34,6 +36,8 @@ function App() {
         { path: "/register", element: <Register /> },
         { path: "/test", element: <Test /> },
         { path: "/cart", element: <Cart /> },
+        {path:'/CategoryProduct/:category',element:<CategoryProduct/>},
+        {path:'/productDetails/:id',element:<ProductDetail/>},
       ],
     },
   ]);

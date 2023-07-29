@@ -57,7 +57,7 @@ const NavBar = () => {
       <ul
         className={
           isOpen
-            ? `absolute top-[3.8rem] right-[0.5rem] flex flex-col p-2 gap-2 border shadow-gray-300`
+            ? `absolute top-[3.8rem] right-[0.5rem] flex flex-col p-2 gap-2 border shadow-gray-300 z-10 bg-white`
             : "hidden sm:flex gap-5"
         }
       >

@@ -3,7 +3,9 @@ const productCategories=[
     'Clothes',
     'Consumables',
     'Home appliance',
-    'Electronics appliance'
+    'Electronics appliance',
+    'Beauty and care',
+    
 ]
  const productSchema=new Schema({
     name:{

@@ -28,6 +28,7 @@ export const addCart=async(req,res)=>{
             }
             const newCartItems=new cart({userId,productId,quantity});
             const result=await newCartItems.save();
+           
             return res.json({status:"success",newCartItems:newCartItems})
         }else{
             return res.json({status:"error",message:"Operation failed"});

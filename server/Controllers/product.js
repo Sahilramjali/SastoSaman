@@ -3,6 +3,7 @@ import {v4 as uuidV4} from 'uuid';
 import Product from '../Models/Product.js';
 import jwt from 'jsonwebtoken';
 import uploadImage from '../Utils/uploadImage.js'
+
 export const addProduct=async(req,res)=>{
     try{
       
@@ -52,5 +53,17 @@ export const getProductByCategory=async(req,res)=>{
         console.log("error in get product by category controller :");
         console.log(err);
         res.status(500).json({status:"error",message:"Internal server error"})
+    }
+}
+export const getSingleProdutDetails=async(req,res)=>{
+    try{
+        const id=req.params.id;
+        const product=await Product.find({_id:id});
+        // const product=await query.exec();
+        res.json({status:'success',product:product});
+
+    }catch(err){
+        console.log(err);
+        res.status(500).json({status:"error",message:"Internal Server error"});
     }
 }

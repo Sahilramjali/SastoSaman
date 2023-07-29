@@ -10,7 +10,7 @@ const Layout = () => {
  
 
   return (
-    <main className="max-w-[1280px] w-full">
+    <main className="max-w-[1280px] w-full bg-[#f5f5f5]">
       <Header />
       <Outlet />
       {/* <Footer/> */}

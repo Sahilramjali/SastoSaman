@@ -49,7 +49,7 @@ const Test = () => {
         if (res.data.error) {
           toast.error(res.data.error);
         } else {
-          toast.success("blog posted");
+          toast.success("product uploaded");
           navigate("/");
         }
       })
