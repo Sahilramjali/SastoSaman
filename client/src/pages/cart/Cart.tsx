@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { addToCart } from "../../redux/cartSlice";
+import { addToCart, clearCart } from "../../redux/cartSlice";
 
 
 
@@ -38,9 +38,11 @@ const Cart = () => {
   
   const { isLogin } = useAppSelector((state) => state.user);
   const [cartItem, setCartItems] = useState<cardItemsProps[]>(cartItems);
-  // const [totalPrices, setTotalPrice] = useState<number>(0);
+ 
   const [reload, setReload] = useState(false);
-
+    useEffect(()=>{
+      document.title="Cart";
+    },[])
   const fetchCartItems = useCallback(async () => {
     await axios
       .get("http://localhost:5000/api/cart/getCart", {
@@ -149,6 +151,28 @@ const Cart = () => {
     return <Navigate to="/login" replace />;
   }
 
+  const handleClearCart=async()=>{
+    await axios.delete('http://localhost:5000/api/cart/clearcart',{
+      headers:{
+        Authorization:`bearer ${cookies.user.token}`
+      }
+    }).then((res)=>{
+      if(res?.data?.status==="success"){
+          toast.success("Removed item");
+          dispatch(clearCart());
+          setReload(!reload);
+        }else{
+          toast.error("Something went wrong");
+          setReload(!reload);
+        }
+    }).catch(err=>{
+      toast.error("Internal server error");
+      setReload(!reload);
+    });
+  }
+
+
+
   return (
     <section className="w-full  flex flex-col p-2">
       {cartItems.length === 0 ? (
@@ -166,7 +190,11 @@ const Cart = () => {
             />
           ))}
           <hr className="mt-6 border-[0.2rem]" />
+          <div className="w-full flex flex-row flex-wrap">
           <div className="w-full flex flex-col gap-5 mt-[2rem]">
+            <button className="px-5 py-4 bg-slate-500 w-[200px] border-none outline-none rounded hover:scale-105" onClick={handleClearCart}>
+                clear Cart
+            </button>
             <div>
               <h4 className="font-[800] text-[1.5rem]">Summary</h4>
               <span>
@@ -177,6 +205,7 @@ const Cart = () => {
             <span>
               total : Rs. <span className="font-[800]">{totalPrice}</span>
             </span>
+          </div>
           </div>
         </>
       )}

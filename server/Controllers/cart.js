@@ -103,3 +103,24 @@ export const cartCount=async(req,res)=>{
         res.status(500).json({status:"error",message:"Internal Server error"})
     }
 }
+
+export const clearCart=async(req,res)=>{
+    try{
+        const token=jwt.verify(
+            req.headers.authorization.split(" ")[1],
+            process.env.JWT_SECRET_KEY
+        );
+        const userId=token._id;
+        if(userId){
+            const clearItems=await cart.deleteMany({userId:userId})
+            res.json({status:"success",message:"cleard Cart"})
+        }else{
+            res.json({status:"error",message:"something went wrong"});
+        }
+        
+       
+    }catch(err){
+        console.log(err);
+        res.status(500).json({status:"error",message:"Internal Serve error"});
+    }
+}

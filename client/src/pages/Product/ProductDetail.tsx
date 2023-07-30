@@ -48,6 +48,13 @@ const ProductDetail = () => {
     }
   }, [product]);
 
+useEffect(()=>{
+    if(product){
+      document.title=`${product.category}: ${product.name}`
+    }
+},[product])
+
+
 const handleAddToCart=async()=>{
     if(isLogin){
         await axios.post("http://localhost:5000/api/cart/updateCart",{

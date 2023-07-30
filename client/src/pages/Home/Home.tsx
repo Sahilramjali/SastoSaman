@@ -3,9 +3,13 @@ import Carousel from "../../components/Carousel"
 import CategoryComponent from "../../components/Category/CategoryItemsCarousel"
 import Footer from "../../components/Footer/Footer"
 
-
+import { useEffect } from "react"
 
 const Home = () => {
+
+  useEffect(()=>{
+    document.title=`SastoSaman: Home`
+  })
   return (
     <>
      <Carousel/>
