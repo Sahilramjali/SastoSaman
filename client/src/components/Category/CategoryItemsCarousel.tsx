@@ -40,6 +40,7 @@ const CategoryComponent: FC<categoryComponentProps> = ({ category }) => {
       </div>
       <div className="flex flex-row overflow-hidden">
         {products.map((product) => (
+          
           <Card key={product._key} {...product} />
         ))}
       </div>

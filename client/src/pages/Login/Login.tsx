@@ -35,7 +35,7 @@ const[cookies,setCookie]=useCookies(['user']);
   
     
     try{
-const result= await axios.post('http://localhost:5000/api/auth/login',formdata)
+const result= await axios.post(import.meta.env.VITE_LOGIN_API,formdata)
     if(result?.data?.status==='error'){
      return toast.error(result?.data?.message);
     }

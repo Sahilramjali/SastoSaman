@@ -7,6 +7,7 @@ import bodyParser from 'body-parser'
 import auth from './routes/authRoute.js';
 import product from './routes/productRoute.js';
 import carts from './routes/cartRoute.js';
+import checkOuts from './routes/checkoutRoute.js'
 import {v2 as cloudinary} from 'cloudinary';
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use(
   cors({
     origin: "http://localhost:5173",
+    // origin:process.env.PRODUCTION_URL,
     credentials: true,
   })
 );
@@ -33,6 +35,7 @@ cloudinary.config({
 app.use("/api/auth",auth );
 app.use('/api/product',product);
 app.use('/api/cart',carts);
+app.use('/api/checkout',checkOuts);
 
 mongoose
   .connect(process.env.MONGO_URL)

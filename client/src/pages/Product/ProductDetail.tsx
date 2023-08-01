@@ -15,12 +15,12 @@ const ProductDetail = () => {
     const [cookies,,]=useCookies(['user']);
     const navigate=useNavigate();
   const {id} = useParams();
-  console.log(id);
+
   const [product, setProduct] = useState([]);
   const [relatedProducts,setRelatedProducts]=useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/product/getProductDetail/${id}`)
+      .get(`${import.meta.env.VITE_GET_PRODUCT_DETAIL_API}/${id}`)
       .then((res) => {
         setProduct(res.data.product[0]);
         console.log(res.data.product[0]);

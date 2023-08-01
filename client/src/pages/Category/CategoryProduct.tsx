@@ -12,7 +12,7 @@ const CategoryProduct = () => {
     setLoading(true);
     axios
       .get(
-        `http://localhost:5000/api/product/getproductByCategory?category=${category}`
+        `${import.meta.env.VITE_GET_PRODUCT_BY_CATEGORY_API}?category=${category}`
       )
       .then((res) => {
         setCategoryProducts(res.data.products);

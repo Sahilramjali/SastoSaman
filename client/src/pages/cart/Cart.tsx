@@ -8,8 +8,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { addToCart, clearCart } from "../../redux/cartSlice";
-
-
+import CheckoutButton from "../../components/checkout/CheckoutButton";
 
 export interface cardItemsProps {
   _id: string;
@@ -32,20 +31,20 @@ export interface cardItemsProps {
 }
 
 const Cart = () => {
-  const {cartItems,totalPrice}=useAppSelector(state=>state.cart);
-  const dispatch=useAppDispatch();
+  const { cartItems, totalPrice } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
   const [cookies, ,] = useCookies(["user"]);
-  
+
   const { isLogin } = useAppSelector((state) => state.user);
   const [cartItem, setCartItems] = useState<cardItemsProps[]>(cartItems);
- 
+
   const [reload, setReload] = useState(false);
-    useEffect(()=>{
-      document.title="Cart";
-    },[])
+  useEffect(() => {
+    document.title = "Cart";
+  }, []);
   const fetchCartItems = useCallback(async () => {
     await axios
-      .get("http://localhost:5000/api/cart/getCart", {
+      .get(import.meta.env.VITE_GET_CART_API, {
         headers: {
           authorization: `beare ${cookies?.user?.token}`,
         },
@@ -54,8 +53,8 @@ const Cart = () => {
         setCartItems(res.data.cartItems);
         dispatch(addToCart(res.data.cartItems));
         console.log(cartItem);
-       console.log(cartItems);
-        
+        console.log(cartItems);
+
         // setTotalPrice();
       })
       .catch((err) => {
@@ -70,17 +69,17 @@ const Cart = () => {
     }
   }, [reload]);
 
-  const removeQuantity = async(item: cardItemsProps) => {
+  const removeQuantity = async (item: cardItemsProps) => {
     if (item.quantity > 1) {
-      const inew:cardItemsProps = { ...item };
+      const inew: cardItemsProps = { ...item };
       inew.quantity = inew.quantity - 1;
-      
+
       axios
         .post(
-          'http://localhost:5000/api/cart/updateCart',
+          import.meta.env.VITE_UPDATE_CART_API,
           {
-            productId:inew.productId,
-            quantity:inew.quantity
+            productId: inew.productId,
+            quantity: inew.quantity,
           },
           {
             headers: {
@@ -94,84 +93,84 @@ const Cart = () => {
         })
         .catch((err) => {
           console.log(err);
-          toast.error("something went wrong")
+          toast.error("something went wrong");
         });
-    } else{
-    await  itemRemove(item.productId);
+    } else {
+      await itemRemove(item.productId);
     }
     console.log("hit reduce");
   };
 
   const addQuantity = (item: cardItemsProps) => {
-    
-      const inew:cardItemsProps = { ...item };
-      inew.quantity = inew.quantity + 1;
-      
-      axios
-        .post(
-          'http://localhost:5000/api/cart/updateCart',
-          {
-            productId:inew.productId,
-            quantity:inew.quantity
+    const inew: cardItemsProps = { ...item };
+    inew.quantity = inew.quantity + 1;
+
+    axios
+      .post(
+        import.meta.env.VITE_UPDATE_CART_API,
+        {
+          productId: inew.productId,
+          quantity: inew.quantity,
+        },
+        {
+          headers: {
+            Authorization: "bearer " + cookies?.user?.token,
           },
-          {
-            headers: {
-              Authorization: "bearer " + cookies?.user?.token,
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res)
-          setReload(!reload);
-        })
-        .catch((err) => {
-          console.log(err);
-          toast.error("something went wrong")
-        });
-    
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        setReload(!reload);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("something went wrong");
+      });
   };
 
-  const itemRemove=async(productId:string)=>{
-    await axios.delete(`http://localhost:5000/api/cart/removeItemFromCart/`+productId,{
-      headers:{
-        Authorization:`bearer ${cookies.user.token}`
-      }
-    }).then(res=>{
-      console.log(res);
-      toast.success("remove item");
-      setReload(!reload);
-    }).catch(err=>{
-      toast.error("something went wrong")
-    })
-    
-  }
+  const itemRemove = async (productId: string) => {
+    await axios
+      .delete(import.meta.env.VITE_REMOVE_ITEM_FROM_CART_API + productId, {
+        headers: {
+          Authorization: `bearer ${cookies.user.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        toast.success("remove item");
+        setReload(!reload);
+      })
+      .catch((err) => {
+        toast.error("something went wrong");
+      });
+  };
 
-  
   if (!isLogin) {
     return <Navigate to="/login" replace />;
   }
 
-  const handleClearCart=async()=>{
-    await axios.delete('http://localhost:5000/api/cart/clearcart',{
-      headers:{
-        Authorization:`bearer ${cookies.user.token}`
-      }
-    }).then((res)=>{
-      if(res?.data?.status==="success"){
+  const handleClearCart = async () => {
+    await axios
+      .delete(import.meta.env.VITE_CLEAR_CART_API, {
+        headers: {
+          Authorization: `bearer ${cookies.user.token}`,
+        },
+      })
+      .then((res) => {
+        if (res?.data?.status === "success") {
           toast.success("Removed item");
           dispatch(clearCart());
           setReload(!reload);
-        }else{
+        } else {
           toast.error("Something went wrong");
           setReload(!reload);
         }
-    }).catch(err=>{
-      toast.error("Internal server error");
-      setReload(!reload);
-    });
-  }
-
-
+      })
+      .catch((err) => {
+        toast.error("Internal server error");
+        setReload(!reload);
+      });
+  };
 
   return (
     <section className="w-full  flex flex-col p-2">
@@ -179,33 +178,42 @@ const Cart = () => {
         <p className="text-center">No product added in cart</p>
       ) : (
         <>
-          {cartItems.map((product,index) => (
+          {cartItems.map((product, index) => (
             <CartCard
-              key={product._id+index}
+              key={product._id + index}
               product={product}
               removeQuantity={removeQuantity}
               addQuantity={addQuantity}
               itemRemove={itemRemove}
-           
             />
           ))}
           <hr className="mt-6 border-[0.2rem]" />
           <div className="w-full flex flex-row flex-wrap">
-          <div className="w-full flex flex-col gap-5 mt-[2rem]">
-            <button className="px-5 py-4 bg-slate-500 w-[200px] border-none outline-none rounded hover:scale-105" onClick={handleClearCart}>
+            <div className="w-full flex flex-col gap-5 mt-[2rem]">
+              <button
+                className="px-5 py-4 bg-slate-500 w-[200px] border-none outline-none rounded hover:scale-105"
+                onClick={handleClearCart}
+              >
                 clear Cart
-            </button>
-            <div>
-              <h4 className="font-[800] text-[1.5rem]">Summary</h4>
-              <span>
-                In your cart {cartItems.length}{" "}
-                {cartItems.length > 1 ? `items` : `item`}
-              </span>
+              </button>
+              <div className="flex flex-row justify-between items-center">
+                <div className="flex flex-col gap-4">
+                  <h4 className="font-[800] text-[1.5rem]">Summary</h4>
+                  <span>
+                    In your cart {cartItems.length}{" "}
+                    {cartItems.length > 1 ? `items` : `item`}
+                  </span>
+                  <span>
+                  total : Rs. <span className="font-[800]">{totalPrice}</span>
+                </span>
+                </div>
+               
+                <div className="h-5">
+                <CheckoutButton cartItems={cartItem} userId={cookies?.user?.id}/>
+                </div>
+              </div>
+              
             </div>
-            <span>
-              total : Rs. <span className="font-[800]">{totalPrice}</span>
-            </span>
-          </div>
           </div>
         </>
       )}

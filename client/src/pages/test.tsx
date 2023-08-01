@@ -30,7 +30,7 @@ const Test = () => {
 
     axios
       .post(
-        "http://localhost:5000/api/product/addProduct",
+        import.meta.env.VITE_ADD_PRODUCT_API,
         {
           name,
           category,

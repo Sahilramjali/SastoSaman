@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface cardItem{
+export interface cardItem{
     _id:string,
     userId:string,
     productId:string,

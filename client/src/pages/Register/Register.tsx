@@ -19,7 +19,7 @@ const Register = () => {
     
       
       try{
-  const result= await axios.post('http://localhost:5000/api/auth/signup',formdata)
+  const result= await axios.post(import.meta.env.VITE_SIGNUP_API,formdata)
       if(result?.data?.status==='error'){
        return toast.error(result?.data?.message);
       }
