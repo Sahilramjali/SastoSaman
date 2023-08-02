@@ -11,6 +11,7 @@ import { useAppDispatch } from "./hooks/useAppDispatch";
 import { getCookieStorage } from "./redux/userSlice";
 import CategoryProduct from "./pages/Category/CategoryProduct";
 import ProductDetail from "./pages/Product/ProductDetail";
+import CheckoutSuccess from "./pages/cart/CheckoutSuccess";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
         { path: "/register", element: <Register /> },
         { path: "/test", element: <Test /> },
         { path: "/cart", element: <Cart /> },
+        {path:"/checkout-success", element:<CheckoutSuccess/>},
         {path:'/CategoryProduct/:category',element:<CategoryProduct/>},
         {path:'/productDetails/:id',element:<ProductDetail/>},
       ],

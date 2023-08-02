@@ -25,6 +25,16 @@ export default {
         borderColor: {
             primary: 'var(--text-primary)',
         },
+        keyframes: {
+            scaleup: {
+              '0%':{scale:'scale(0px)'},
+                '50%':{scale:'scale(40px)'},
+              '100%': { scale: 'scale(80px)' },
+            }
+          },
+          animation: {
+            scaleup: 'scaleup 1s linear infinite',
+          }
     },
 },
 plugins: [

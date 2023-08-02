@@ -16,6 +16,7 @@ dotenv.config();
 app.use(express.json())
 app.use(
   cors({
+  
     origin: "http://localhost:5173",
     // origin:process.env.PRODUCTION_URL,
     credentials: true,
@@ -35,7 +36,7 @@ cloudinary.config({
 app.use("/api/auth",auth );
 app.use('/api/product',product);
 app.use('/api/cart',carts);
-app.use('/api/checkout',checkOuts);
+// app.use('/api/checkout',checkOuts);
 
 mongoose
   .connect(process.env.MONGO_URL)

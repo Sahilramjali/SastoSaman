@@ -57,7 +57,7 @@ useEffect(()=>{
 
 const handleAddToCart=async()=>{
     if(isLogin){
-        await axios.post("http://localhost:5000/api/cart/updateCart",{
+        await axios.post(import.meta.env.VITE_ADD_CART_API,{
             productId:product._id,
             quantity:1,
         },{
@@ -67,16 +67,20 @@ const handleAddToCart=async()=>{
         }).then(async res=>{
             console.log("++++==========================================")
             console.log(res.data);
+            if(res.data.status==="Already in cart"){
+              toast("Already in cart");
+            }else{
+              toast.success("Item is added to cart");
+              await axios.get("http://localhost:5000/api/cart/getCart",{
+                   headers:{
+                       authorization :`bearer ${cookies?.user?.token}`
+                   }
+               }).then(res=>{
+                   dispatch(addToCart(res.data.cartItems));
+                   
+               })
+            }
             
-            toast.success("Item is added to cart");
-           await axios.get("http://localhost:5000/api/cart/getCart",{
-                headers:{
-                    authorization :`bearer ${cookies?.user?.token}`
-                }
-            }).then(res=>{
-                dispatch(addToCart(res.data.cartItems));
-                
-            })
         }).catch(err=>{
             console.log(err);
             toast.error("something went wrong")

@@ -174,11 +174,11 @@ const Cart = () => {
 
   return (
     <section className="w-full  flex flex-col p-2">
-      {cartItems.length === 0 ? (
+      {cartItem.length === 0 ? (
         <p className="text-center">No product added in cart</p>
       ) : (
         <>
-          {cartItems.map((product, index) => (
+          {cartItem.map((product, index) => (
             <CartCard
               key={product._id + index}
               product={product}
@@ -191,7 +191,7 @@ const Cart = () => {
           <div className="w-full flex flex-row flex-wrap">
             <div className="w-full flex flex-col gap-5 mt-[2rem]">
               <button
-                className="px-5 py-4 bg-slate-500 w-[200px] border-none outline-none rounded hover:scale-105"
+                className="px-5 py-4 bg-slate-500 w-[200px] border-none outline-none rounded hover:scale-105 text-white font-[600]"
                 onClick={handleClearCart}
               >
                 clear Cart
@@ -200,8 +200,8 @@ const Cart = () => {
                 <div className="flex flex-col gap-4">
                   <h4 className="font-[800] text-[1.5rem]">Summary</h4>
                   <span>
-                    In your cart {cartItems.length}{" "}
-                    {cartItems.length > 1 ? `items` : `item`}
+                    In your cart {cartItem.length}{" "}
+                    {cartItem.length > 1 ? `items` : `item`}
                   </span>
                   <span>
                   total : Rs. <span className="font-[800]">{totalPrice}</span>

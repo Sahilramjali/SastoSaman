@@ -11,6 +11,34 @@ export const addCart=async(req,res)=>{
         const userId=token._id;
         const{productId,quantity}=req.body;
         if(userId){
+           const isItemInCart=await cart.findOne({userId,productId});
+           if(isItemInCart){
+            return res.json({status:"Already in cart",message:"Already in cart"});
+           }
+           
+            const newCartItems=new cart({userId,productId,quantity});
+            const result=await newCartItems.save();
+           
+            return res.json({status:"success",newCartItems:newCartItems})
+        }else{
+            return res.json({status:"error",message:"Operation failed"});
+        }
+    }catch(err){
+        console.log(err);
+        res.status(500).json({status:"error",message:"Internal Server error"})
+    }
+}
+
+export const updateCart=async(req,res)=>{
+    try{
+
+        const token=jwt.verify(
+            req.headers.authorization.split(" ")[1],
+            process.env.JWT_SECRET_KEY
+        )
+        const userId=token._id;
+        const{productId,quantity}=req.body;
+        if(userId){
             if(quantity==0){
                 await cart.findOneAndDelete({userId,productId});
                 return res.json({
