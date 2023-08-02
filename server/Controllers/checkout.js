@@ -28,6 +28,9 @@ export const checkOut=async(req,res)=>{
             id: item.productData[0]._id,
           },
         },
+        phone_number_collection: {
+          enabled: true,
+        },
         unit_amount: item.productData[0].price * 100,
       },
       quantity: item.quantity,
@@ -38,7 +41,9 @@ export const checkOut=async(req,res)=>{
       shipping_address_collection: {
         allowed_countries: ["NP"],
       },
-     
+      phone_number_collection: {
+        enabled: true,
+      },
       success_url: `http://localhost:5173/checkout-success`,
       cancel_url:`http://localhost:5173/cart`,
       line_items
