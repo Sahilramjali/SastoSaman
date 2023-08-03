@@ -117,8 +117,16 @@ const handleAddToCart=async()=>{
             ))}
           </div>
         </div>
+
       </div>
       }
+      <hr/>
+      {product && <div className="flex flex-col mt-2 p-3">
+        <h2 className="text-[1.6rem] font-[600]">Product Details</h2>
+        <p className="text-[1rem] font-[500]">
+        {product.description}
+        </p>
+        </div>}
     </section>
   );
 };

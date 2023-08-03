@@ -18,7 +18,7 @@ const CheckoutButton:FC<checkoutButtonProps> = ({cartItems,userId}) => {
     const handleCheckout=async()=>{
         
         if(isLogin){
-            await axios.post(import.meta.env.VITE_CLEAR_CHECKOUT,{
+            await axios.post(import.meta.env.VITE_CART_CHECKOUT,{
                 cartItems,
                 userId,
                 },{

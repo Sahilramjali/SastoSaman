@@ -1,10 +1,10 @@
 
-import express from 'express';
-import { checkOut } from "../Controllers/checkout.js";
+// import express from 'express';
+// import { checkOut } from "../Controllers/checkout.js";
 
-const router=express.Router();
+// const router=express.Router();
 
-router.post('/create-checkout-session',checkOut);
+// router.post('/create-checkout-session',checkOut);
 
 
-export default router;
+// export default router;

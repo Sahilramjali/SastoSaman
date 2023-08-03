@@ -7,7 +7,7 @@ import bodyParser from 'body-parser'
 import auth from './routes/authRoute.js';
 import product from './routes/productRoute.js';
 import carts from './routes/cartRoute.js';
-import checkOuts from './routes/checkoutRoute.js'
+// import checkOuts from './routes/checkoutRoute.js'
 import {v2 as cloudinary} from 'cloudinary';
 
 const app = express();
