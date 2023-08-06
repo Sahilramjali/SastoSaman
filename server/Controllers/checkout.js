@@ -56,7 +56,14 @@ export const checkOut = async (req, res) => {
     res.status(500).json({ status: "error", message: "Internal Server error" });
   }
 };
-
+export default stripeWebHook=async(req,res)=>{
+  try{
+res.json("success");
+  }catch(err){
+    console.log(err);
+    res.status(500).json({ status: "error", message: "Internal Server error" });
+  }
+}
 
 
 
