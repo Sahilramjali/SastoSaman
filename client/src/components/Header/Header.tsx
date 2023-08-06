@@ -41,7 +41,7 @@ const Header = () => {
     <div key={data._id}className="h-[40px] border mb-1 flex items-center gap-3 p-2">
        
         <div className="h-[40px] w-[40px]">
-          <img src={data.imageUrl} src={data.name} className="h-full w-full object-contain "/>
+          <img src={data.imageUrl} alt={data.name} className="h-full w-full object-contain "/>
         </div>
         {data.name}
        

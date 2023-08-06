@@ -56,40 +56,52 @@ export const checkOut = async (req, res) => {
     res.status(500).json({ status: "error", message: "Internal Server error" });
   }
 };
-export const stripeWebHook=async(req,res)=>{
-  try{
-    const endpointSecret = "whsec_ZRc1AXdAT2NAQi3x0ApWClbuR0hwPHDD";
-    const sig = request.headers['stripe-signature'];
+// export const stripeWebHook=async(req,res)=>{
+//   try{
+//     //const endpointSecret = "whsec_ZRc1AXdAT2NAQi3x0ApWClbuR0hwPHDD";
+//     const signSecret="whsec_fe8c4f65afc665bfb3f1b97ef7fc96fba15438a58b16bd2a7cc03941d4ee8953"
+//     const Stripe = stripe(process.env.STRIPE_SECRET_KEY);
+//     const sig = req.headers['stripe-signature'];
 
-  let event;
+//   let event;
 
-  try {
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-  } catch (err) {
-    response.status(400).send(`Webhook Error: ${err.message}`);
-    return;
-  }
+//   try {
+//     event = Stripe.webhooks.constructEvent(req.body, sig, signSecret);
+//    console.log("verified");
+//   } catch (err) {
+//     console.log(err);
+//     res.status(400).send(`Webhook Error: ${err.message}`);
+    
+//   }
 
-  // Handle the event
-  switch (event.type) {
-    case 'payment_intent.succeeded':
-      const paymentIntentSucceeded = event.data.object;
-      console.log(paymentIntentSucceeded);
-      // Then define and call a function to handle the event payment_intent.succeeded
-      break;
-    // ... handle other event types
-    default:
-      console.log(`Unhandled event type ${event.type}`);
-  }
+//   console.log(event.type);
+//   console.log(event.data.object);
+//   console.log(event.data.object.id);
+//   // Handle the event
+//   if (eventType === "checkout.session.completed") {
+//     Stripe.customers
+//       .retrieve(data.customer)
+//       .then(async (customer) => {
+//         console.log(customer);
+//         // try {
+//         //   // CREATE ORDER
+//         //   //createOrder(customer, data);
+//         // } catch (err) {
+//         //   console.log(typeof createOrder);
+//         //   console.log(err);
+//         // }
+//       })
+//       .catch((err) => console.log(err.message));
+//   }
 
-  // Return a 200 response to acknowledge receipt of the event
-  response.send();
-res.json("success");
-  }catch(err){
-    console.log(err);
-    res.status(500).json({ status: "error", message: "Internal Server error" });
-  }
-}
+//   // Return a 200 response to acknowledge receipt of the event
+//   res.send().end();
+
+//   }catch(err){
+//     console.log(err);
+//     res.status(500).json({ status: "error", message: "Internal Server error" });
+//   }
+// }
 
 
 
