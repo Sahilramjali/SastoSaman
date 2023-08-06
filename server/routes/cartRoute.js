@@ -10,5 +10,5 @@ router.post('/updateCart',updateCart);
 router.delete('/removeItemFromCart/:productId',removeItemFromCart);
 router.delete('/clearcart',clearCart);
 router.post('/checkout',checkOut);
-router.post('/webhook',stripeWebHook)
+router.post('/webhook',express.raw({type: 'application/json'}),stripeWebHook)
 export default router;
