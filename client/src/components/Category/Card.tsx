@@ -15,7 +15,7 @@ const Card:FC<cardProps> = ({
   imageUrl
 }) => {
   const navigate=useNavigate();
-  console.log(_id);
+ 
   const onClickHandler=()=>{
     navigate(`/productDetails/${_id}`)
   }

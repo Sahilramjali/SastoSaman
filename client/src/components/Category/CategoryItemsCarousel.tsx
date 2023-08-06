@@ -10,7 +10,7 @@ interface categoryComponentProps {
 
 const CategoryComponent: FC<categoryComponentProps> = ({ category }) => {
   const navigate = useNavigate();
-  console.log(category);
+ 
   const [products, setProducts] = useState([]);
   useEffect(() => {
     axios
@@ -19,7 +19,7 @@ const CategoryComponent: FC<categoryComponentProps> = ({ category }) => {
       )
       .then((res) => {
         setProducts(res.data.products);
-        console.log(res.data.products);
+      
       })
       .catch((err) => {
         console.log(err);
