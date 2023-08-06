@@ -20,7 +20,7 @@ const Header = () => {
         }).catch(err=>{
          console.log("something went wrong");
         })
-       },2000);
+       },1000);
     }
     return ()=>clearTimeout(timer);
   },[searchData])
@@ -35,7 +35,7 @@ const Header = () => {
       <div className="hidden md:flex gap-1 justify-start items-center border rounded px-2 py-1 bg-blue w-2/5">
       <Search />
       {
-        searchData && <div className="absolute h-[100px] bg-white w-[400px] top-16 left-[18rem] z-[200] overflow-y-auto p-5">
+        searchData && <div className="absolute h-[100px] bg-white w-[400px] top-16  z-[200] overflow-y-auto p-5">
 {
   result.length!==0?result.map(data=>(
     <div key={data._id}className="h-[40px] border mb-1 flex items-center gap-3 p-2">
