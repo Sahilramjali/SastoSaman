@@ -58,8 +58,7 @@ export const checkOut = async (req, res) => {
 };
 // export const stripeWebHook=async(req,res)=>{
 //   try{
-//     //const endpointSecret = "whsec_ZRc1AXdAT2NAQi3x0ApWClbuR0hwPHDD";
-//     const signSecret="whsec_fe8c4f65afc665bfb3f1b97ef7fc96fba15438a58b16bd2a7cc03941d4ee8953"
+//    
 //     const Stripe = stripe(process.env.STRIPE_SECRET_KEY);
 //     const sig = req.headers['stripe-signature'];
 
